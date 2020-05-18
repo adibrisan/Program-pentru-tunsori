@@ -83,8 +83,49 @@ public class LoginFrame extends JFrame{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		inregistrarePanel.getLoginBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				////citire conturi din fisiere json////
+
+				try (Reader reader = new FileReader("src/main/resources/users.json")) {
+					JSONParser parser = new JSONParser();
+					JSONArray jsonArray = (JSONArray) parser.parse(reader);
+					Iterator<JSONObject> it = jsonArray.iterator();
+					while (it.hasNext()) {
+							JSONObject obj = it.next();
+							String userJSON = (String) obj.get("username");
+							String parolaJSON = (String) obj.get("password");
+							String user = inregistrarePanel.getNameField().getText();
+							String parola = inregistrarePanel.getPasswordField().getText();
+							
+							if(userJSON.equals(user) && parolaJSON.equals(parola)) {
+								ClientFrame client = new ClientFrame();
+								client.setLoginFrameOff(getLoginFrame());
+								
+							}
+
+					}
+				} catch (IOException ev) {
+					ev.printStackTrace();
+				} catch (ParseException ev) {
+					ev.printStackTrace();
+				}
+				
+				if (inregistrarePanel.getNameField().getText().trim().equals("admin") && inregistrarePanel.getPasswordField().getText().trim().equals("admin")) {
+					AdminFrame admin = new AdminFrame();
+					admin.setLoginFrameOff(getLoginFrame());
+				}
+
+				else {
+					inregistrarePanel.getErrorLabel().setText("Invalid user...");
+			      }
+			}
+			
+		});
 		
 	}
+	
 	public void setMainFrame(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		mainFrame.setVisible(false);
