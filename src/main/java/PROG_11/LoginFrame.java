@@ -102,7 +102,7 @@ public class LoginFrame extends JFrame{
 							if(userJSON.equals(user) && parolaJSON.equals(parola)) {
 								ClientFrame client = new ClientFrame();
 								client.setLoginFrameOff(getLoginFrame());
-								
+								client.setClientName(userJSON);
 							}
 
 					}

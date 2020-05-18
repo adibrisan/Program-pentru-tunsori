@@ -1,20 +1,30 @@
 package PROG_11;
 
 import java.awt.BorderLayout;
-
-
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
 public class ClientFrame extends JFrame{
 	private LoginFrame loginFrame;
-	
+	private OptiuniClientPanel optiuniClient;
+	private String numeClient;
 	
 	public ClientFrame() {
 		super("Client");
 		
 		setLayout(new BorderLayout());
 		
+		optiuniClient = new OptiuniClientPanel();
+		add(optiuniClient, BorderLayout.CENTER);
+		
+		
+		Color culoare = new Color(44, 62, 80);
+		
+		optiuniClient.setBackground(culoare);
+
 		
 		setSize(400,300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,4 +42,11 @@ public class ClientFrame extends JFrame{
 		return this;
 	}
 
+	public void setClientName(String userJSON) {
+		this.numeClient = userJSON;
+	}
+	
+	public String getNumeClient() {
+		return numeClient;
+	}
 }
