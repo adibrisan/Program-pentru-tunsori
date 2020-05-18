@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import PROG_8.RecenzieFrame;
+
 public class ClientFrame extends JFrame{
 	private LoginFrame loginFrame;
 	private OptiuniClientPanel optiuniClient;
@@ -24,7 +26,15 @@ public class ClientFrame extends JFrame{
 		Color culoare = new Color(44, 62, 80);
 		
 		optiuniClient.setBackground(culoare);
+        
+		optiuniClient.getRecenziiBtn().addActionListener(new ActionListener() {
 
+			public void actionPerformed(ActionEvent e) {
+				RecenzieFrame recenzieFrame = new RecenzieFrame();
+				recenzieFrame.setClientFrameOff(getClientFrame());
+			}
+			
+		});
 		
 		setSize(400,300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
