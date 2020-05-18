@@ -72,10 +72,24 @@ public class RecenzieFrame extends JFrame{
 		ToolBar2Btn toolBar = textPanel.getToolBar();
 		toolBar.setBackground(culoare);
 		
+		toolBar.getBackBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				setClientFrameOn(clientFrame);
+			}
+			
+		});
+		
 		toolBar.getOKBtn().addActionListener(new ActionListener() {
 
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				if(textPanel.getTextArea().getText().equals("")) {
+					textPanel.getErrorLabel().setText("Introdu recenzia");
+					return;
+				}
 				
 				File file = new File("src/main/resources/FisierRecenzii.json");
 				
