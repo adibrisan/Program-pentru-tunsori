@@ -26,6 +26,15 @@ public class MainFrame extends JFrame{
 		formPanel.setBackground(culoare);
 		loginPanel.setBackground(culoare);
 		
+		loginPanel.getLoginButton().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				LoginFrame loginFrame = new LoginFrame();
+				loginFrame.setMainFrame(getMainFrame());
+			}
+			
+		});
+		
 		setSize(500,400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
