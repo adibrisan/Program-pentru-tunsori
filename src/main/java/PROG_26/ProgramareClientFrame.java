@@ -48,7 +48,7 @@ public class ProgramareClientFrame extends JFrame{
 		programarePanel.setBackground(culoare);
 		toolBar.setBackground(culoare);
 		
-toolBar.getOKBtn().addActionListener(new ActionListener() {
+		toolBar.getOKBtn().addActionListener(new ActionListener() {
 			
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {			
@@ -254,7 +254,15 @@ toolBar.getOKBtn().addActionListener(new ActionListener() {
 			}
 			
 		});
-		
+
+		toolBar.getBackBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				setClientFrameOn(clientFrame);
+			}
+	
+		});
+
 		setSize(400,300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -266,6 +274,12 @@ toolBar.getOKBtn().addActionListener(new ActionListener() {
 	public void setClientFrameOff(ClientFrame clientFrame2) {
 		this.clientFrame = clientFrame2;
 		clientFrame.setVisible(false);		
+	}
+	
+	public void setClientFrameOn(ClientFrame clientFrame) {
+		this.clientFrame = clientFrame;
+		clientFrame.setVisible(true);
+		setVisible(false);
 	}
 	
 }

@@ -254,6 +254,14 @@ public class ProgramareFrizerFrame extends JFrame{
 			
 		});
 		
+		toolBar.getBackBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				setAdminFrameOn(adminFrame);
+			}
+			
+		});
+		
 		setSize(400,300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -267,5 +275,10 @@ public class ProgramareFrizerFrame extends JFrame{
 		adminFrame.setVisible(false);		
 	}
 	
+	public void setAdminFrameOn(AdminFrame adminFrame) {
+		this.adminFrame = adminFrame;
+		adminFrame.setVisible(true);
+		setVisible(false);
+	}
 }
 
