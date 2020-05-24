@@ -43,6 +43,15 @@ public class AgendaFrame extends JFrame{
 		
 		agendaPanel.setBackground(culoare);		
 		toolBar.setBackground(culoare);
+		
+		toolBar.getBackBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				setClientFrameOn(clientFrame);
+			}
+			
+		});
+		
 		toolBar.getOKBtn().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -174,6 +183,12 @@ public class AgendaFrame extends JFrame{
 	public void setClientFrameOff(ClientFrame clientFrame) {
 		this.clientFrame = clientFrame;
 		clientFrame.setVisible(false);		
+	}
+	
+	public void setClientFrameOn(ClientFrame clientFrame) {
+		this.clientFrame = clientFrame;
+		clientFrame.setVisible(true);
+		setVisible(false);
 	}
 	
 	public AgendaFrame getAgendaFrame() {

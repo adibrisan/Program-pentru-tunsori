@@ -41,6 +41,15 @@ public class AgendaFrizerFrame extends JFrame{
 		
 		agendaPanel.setBackground(culoare);
 		toolBar.setBackground(culoare);
+		
+		toolBar.getBackBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				setAdminFrameOn(adminFrame);
+			}
+			
+		});
+		
 		toolBar.getOKBtn().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -172,6 +181,12 @@ public class AgendaFrizerFrame extends JFrame{
 	
 	public AgendaFrizerFrame getAgendaFrame() {
 		return this;
+	}
+	
+	public void setAdminFrameOn(AdminFrame admin) {
+		this.adminFrame = admin;
+		adminFrame.setVisible(true);
+		setVisible(false);
 	}
 	
 	public void setAdminFrameOff(AdminFrame admin) {
