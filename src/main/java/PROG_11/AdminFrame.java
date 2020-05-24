@@ -21,6 +21,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import PROG_26.ProgramareFrizerFrame;
 import PROG_6.RecenziiFrame;
 
 public class AdminFrame extends JFrame{
@@ -39,6 +40,15 @@ public class AdminFrame extends JFrame{
 		Color culoare = new Color(44, 62, 80);
 		
 		optiuniPanel.setBackground(culoare);
+		
+		optiuniPanel.getProgramareBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				ProgramareFrizerFrame programareFrame = new ProgramareFrizerFrame();
+				programareFrame.setAdminFrameOff(getAdminFrame());
+			}
+			
+		});
 		
 		optiuniPanel.getRecenziiBtn().addActionListener(new ActionListener() {
 
