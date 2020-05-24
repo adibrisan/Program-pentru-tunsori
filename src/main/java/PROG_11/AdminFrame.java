@@ -45,7 +45,25 @@ public class AdminFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				RecenziiFrame recenziiFrame = new RecenziiFrame();
 				recenziiFrame.setAdminFrameOff(getAdminFrame());
+				File file = new File("src/main/resources/FisierRecenzii.json");
 				
+				JSONParser parser = new JSONParser();
+				try (Reader reader = new FileReader(file)) {
+					JSONArray jsonArray = (JSONArray) parser.parse(reader);
+					Iterator<JSONObject> it = jsonArray.iterator();
+					while (it.hasNext()) {
+						
+						JSONObject obj = it.next();
+						String numeClient = (String) obj.get("Nume Client");
+						String recenzie = (String) obj.get("Recenzie");
+						recenziiFrame.getRecenzieTextPanelFrizer().getTextArea().append(numeClient + " : ");
+						recenziiFrame.getRecenzieTextPanelFrizer().getTextArea().append("\n");
+						recenziiFrame.getRecenzieTextPanelFrizer().getTextArea().append(recenzie);
+						recenziiFrame.getRecenzieTextPanelFrizer().getTextArea().append("\n\n");
+						
+					}
+				} catch (IOException e1) {e1.printStackTrace();}
+				  catch (ParseException e1) {e1.printStackTrace();}
 			}
 			
 		});
