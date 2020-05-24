@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import PROG_26.ProgramareClientFrame;
 import PROG_8.RecenzieFrame;
 
 public class ClientFrame extends JFrame{
@@ -26,7 +27,16 @@ public class ClientFrame extends JFrame{
 		Color culoare = new Color(44, 62, 80);
 		
 		optiuniClient.setBackground(culoare);
-        
+
+		optiuniClient.getProgramareBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				ProgramareClientFrame programareFrame = new ProgramareClientFrame();
+				programareFrame.setClientFrameOff(getClientFrame());
+			}
+		
+		});
+		
 		optiuniClient.getRecenziiBtn().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
