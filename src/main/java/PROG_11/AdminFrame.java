@@ -21,6 +21,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import PROG_6.RecenziiFrame;
+
 public class AdminFrame extends JFrame{
 	private LoginFrame loginFrame;
 	private OptiuniFrizerPanel optiuniPanel;
@@ -38,6 +40,15 @@ public class AdminFrame extends JFrame{
 		
 		optiuniPanel.setBackground(culoare);
 		
+		optiuniPanel.getRecenziiBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				RecenziiFrame recenziiFrame = new RecenziiFrame();
+				recenziiFrame.setAdminFrameOff(getAdminFrame());
+				
+			}
+			
+		});
 		
 		setVisible(true);
 		setSize(400,300);
