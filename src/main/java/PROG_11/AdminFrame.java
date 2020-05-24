@@ -22,6 +22,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import PROG_26.ProgramareFrizerFrame;
+import PROG_27.AgendaFrizerFrame;
 import PROG_6.RecenziiFrame;
 
 public class AdminFrame extends JFrame{
@@ -74,6 +75,15 @@ public class AdminFrame extends JFrame{
 					}
 				} catch (IOException e1) {e1.printStackTrace();}
 				  catch (ParseException e1) {e1.printStackTrace();}
+			}
+			
+		});
+		
+		optiuniPanel.getAgendaBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				AgendaFrizerFrame agendaFrame = new AgendaFrizerFrame();
+				agendaFrame.setAdminFrameOff(getAdminFrame());
 			}
 			
 		});

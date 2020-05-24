@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import PROG_26.ProgramareClientFrame;
+import PROG_27.AgendaFrame;
 import PROG_8.RecenzieFrame;
 
 public class ClientFrame extends JFrame{
@@ -42,6 +43,15 @@ public class ClientFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				RecenzieFrame recenzieFrame = new RecenzieFrame();
 				recenzieFrame.setClientFrameOff(getClientFrame());
+			}
+			
+		});
+		
+		optiuniClient.getVerificaOrarulBtn().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				AgendaFrame agendaFrame = new AgendaFrame();
+				agendaFrame.setClientFrameOff(getClientFrame());
 			}
 			
 		});
