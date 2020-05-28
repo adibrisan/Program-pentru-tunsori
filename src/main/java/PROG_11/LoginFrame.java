@@ -1,5 +1,6 @@
 package PROG_11;
 import java.awt.BorderLayout;
+import java.io.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,12 +9,16 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,6 +28,27 @@ public class LoginFrame extends JFrame{
 	private MainFrame mainFrame;
 	private InregistrarePanel inregistrarePanel;
 	
+	  private static String encodePassword(String salt, String password) {
+	        MessageDigest md = getMessageDigest();
+	        md.update(salt.getBytes(StandardCharsets.UTF_8));
+
+	        byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
+
+	        // This is the way a password should be encoded when checking the credentials
+	        return new String(hashedPassword, StandardCharsets.UTF_8)
+	                .replace("\"", ""); //to be able to save in JSON format
+	    }
+
+	    private static MessageDigest getMessageDigest() {
+	        MessageDigest md;
+	        try {
+	            md = MessageDigest.getInstance("SHA-512");
+	        } catch (NoSuchAlgorithmException e) {
+	            throw new IllegalStateException("SHA-512 does not exist!");
+	        }
+	        return md;
+	    }
+
 	@SuppressWarnings("unchecked")
 	public LoginFrame() {
 		super("Login");
@@ -44,27 +70,27 @@ public class LoginFrame extends JFrame{
 		///scriere conturi in fisierul json///
 		JSONObject obj1 = new JSONObject();
 		obj1.put("username", "cosmin");
-		obj1.put("password", "marsavina");
+		obj1.put("password", encodePassword("cosmin","marsavina"));
 		
 		JSONObject obj2 = new JSONObject();
 		obj2.put("username", "borza");
-		obj2.put("password", "alex");
+		obj2.put("password", encodePassword("borza","alex"));
 
 		JSONObject obj3 = new JSONObject();
 		obj3.put("username", "adi");
-		obj3.put("password", "brisan");
+		obj3.put("password", encodePassword("adi","brisan"));
 		
 		JSONObject obj4 = new JSONObject();
 		obj4.put("username", "cata");
-		obj4.put("password", "botean");
+		obj4.put("password", encodePassword("cata","botean"));
 
 		JSONObject obj5 = new JSONObject();
 		obj5.put("username", "ion");
-		obj5.put("password", "constantin");
+		obj5.put("password", encodePassword("ion","constantin"));
 		
 		JSONObject obj6 = new JSONObject();
 		obj6.put("username", "Bianca");
-		obj6.put("password", "Buleu");
+		obj6.put("password", encodePassword("Bianca","buleu"));
 
 		
 		JSONArray list = new JSONArray();
@@ -78,7 +104,7 @@ public class LoginFrame extends JFrame{
 		File file = new File("src/main/resources/users.json");
 		try (FileWriter fw = new FileWriter(file)) {
 			fw.write(list.toJSONString());
-
+			fw.flush();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -98,8 +124,7 @@ public class LoginFrame extends JFrame{
 							String parolaJSON = (String) obj.get("password");
 							String user = inregistrarePanel.getNameField().getText();
 							String parola = inregistrarePanel.getPasswordField().getText();
-							
-							if(userJSON.equals(user) && parolaJSON.equals(parola)) {
+							if(userJSON.equals(user) && MessageDigest.isEqual(parolaJSON.getBytes(),encodePassword(user,parola).getBytes())) {
 								ClientFrame client = new ClientFrame();
 								client.setLoginFrameOff(getLoginFrame());
 								client.setClientName(userJSON);
@@ -120,6 +145,7 @@ public class LoginFrame extends JFrame{
 				else {
 					inregistrarePanel.getErrorLabel().setText("Invalid user...");
 			      }
+				
 			}
 			
 		});
