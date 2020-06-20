@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class ToolBarBackBtn extends JPanel{
 	private JButton goBackBtn;
-	
+	private boolean ok = false;
 	public ToolBarBackBtn() {
 		goBackBtn = new JButton("Inapoi");
 		setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -18,9 +18,13 @@ public class ToolBarBackBtn extends JPanel{
 		goBackBtn.setForeground(Color.white);
 
 		add(goBackBtn);
+		ok=true;
 	}
 	
 	public JButton getBackBtn() {
 		return goBackBtn;
+	}
+	public boolean isOK6() {
+		return ok;
 	}
 }

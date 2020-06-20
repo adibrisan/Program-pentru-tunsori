@@ -37,8 +37,9 @@ public class ProgramareFrizerPanel extends JPanel{
 	private JComboBox serviciuCombo;
 	private JLabel serviciuLabel;
 	private JLabel errorLabel;
+	private DefaultComboBoxModel<String> serviciiModel = new DefaultComboBoxModel<String>();
 
-
+	@SuppressWarnings("unchecked")
 	public ProgramareFrizerPanel() {
 		
 		serviciuCombo = new JComboBox<String>();
@@ -159,7 +160,7 @@ public class ProgramareFrizerPanel extends JPanel{
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 		
 		
-		DefaultComboBoxModel<String> serviciiModel = new DefaultComboBoxModel<String>();
+		
 		serviciiModel.addElement("Serviciul Dorit");
 		serviciiModel.addElement("Tuns Barbati");
 		serviciiModel.addElement("Aranjat Barba");
@@ -279,6 +280,9 @@ public class ProgramareFrizerPanel extends JPanel{
 
 	public JLabel getErrorLabel() {
 		return errorLabel;
+	}
+	public DefaultComboBoxModel<String> getServiciiModel(){
+		return serviciiModel;
 	}
 
 }
