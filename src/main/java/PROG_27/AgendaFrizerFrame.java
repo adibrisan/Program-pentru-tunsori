@@ -29,6 +29,10 @@ public class AgendaFrizerFrame extends JFrame{
 	private AdminFrame adminFrame;
 	private ToolBar2Btn toolBar;
 	private AgendaPanel agendaPanel;
+	
+	private AgendaOrarFrizerFrame agendaOrar = new AgendaOrarFrizerFrame();
+	private JSONArray list = new JSONArray();
+	
 	public AgendaFrizerFrame() {
 		super("Agenda");
 		setLayout(new BorderLayout());
@@ -53,8 +57,8 @@ public class AgendaFrizerFrame extends JFrame{
 		toolBar.getOKBtn().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				String data = agendaPanel.getDataField().getText();
 				
+				String data = agendaPanel.getDataField().getText();
 				String ziS = data.substring(0,2);
 				String lunaS = data.substring(3,5);
 				String anS = data.substring(6,10);
@@ -131,7 +135,7 @@ public class AgendaFrizerFrame extends JFrame{
                 
 		    	else {
 	    			agendaPanel.getErrorLabel().setText("");
-	    			AgendaOrarFrizerFrame agendaOrar = new AgendaOrarFrizerFrame();
+	    			
 	    			agendaOrar.setAgendaFrizerFrameOff(getAgendaFrame());
 	    			
 	    			///Json///
@@ -178,6 +182,40 @@ public class AgendaFrizerFrame extends JFrame{
 
 		
 	}
+	public void readAgenda(String r) {
+		File file = new File(r);
+		String data = agendaPanel.getDataField().getText();
+		JSONParser parser = new JSONParser();
+		try (Reader reader = new FileReader(file)) {
+			JSONArray jsonArray = (JSONArray) parser.parse(reader);
+			Iterator<JSONObject> it = jsonArray.iterator();
+			while (it.hasNext()) {
+				JSONObject obj = it.next();
+				String dataF = (String) obj.get("Data");
+				String oraF = (String) obj.get("Ora");
+				String serviciuF = (String) obj.get("Serviciu");
+				list.add(obj);
+				if(data.equals(dataF)) {
+					JLabel[] labelS = agendaOrar.getOraPanelSt().getLabeluri();
+            		JLabel[] labelD = agendaOrar.getOraPanelDr().getLabeluri();
+            		
+            		for(int i = 0; i < 8; i++) {
+            			if(oraF.equals(labelS[i].getText())) {
+            				JTextField[] fieldS = agendaOrar.getOraPanelSt().getFielduri();
+            				fieldS[i].setText(serviciuF);
+            				break;
+            			}
+            			else if(oraF.equals(labelD[i].getText())) {
+            				JTextField[] fieldD = agendaOrar.getOraPanelDr().getFielduri();
+            				fieldD[i].setText(serviciuF);
+            				break;
+            			}
+            		}
+				}
+			}
+		} catch (IOException e1) {e1.printStackTrace();} 
+		  catch (ParseException e1) {e1.printStackTrace();}
+	}
 	
 	public AgendaFrizerFrame getAgendaFrame() {
 		return this;
@@ -192,6 +230,9 @@ public class AgendaFrizerFrame extends JFrame{
 	public void setAdminFrameOff(AdminFrame admin) {
 		this.adminFrame = admin;
 		adminFrame.setVisible(false);
+	}
+	public JSONArray getList() {
+		return list;
 	}
 	
 }

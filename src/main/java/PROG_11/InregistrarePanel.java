@@ -18,10 +18,10 @@ import javax.swing.border.TitledBorder;
 
 public class InregistrarePanel extends JPanel{
 	private JLabel numeLabel;
-	private JTextField numeField;
+	public JTextField numeField;
 	private JLabel parolaLabel;
-	private JPasswordField parolaField;
-	private JButton loginBtn;
+	public JPasswordField parolaField;
+	public JButton loginBtn;
 	private GridBagConstraints gc;
 	private JLabel errorLabel;
 
