@@ -53,9 +53,86 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class RecenzieFrame extends JFrame{
-	private RecenzieTextPanel textPanel;
-	private ClientFrame clientFrame;
+	private  RecenzieTextPanel textPanel;
+	private  ClientFrame clientFrame;
+	private JSONArray list = new JSONArray();
+	private JSONArray lista = new JSONArray();
+	
+	public JSONArray readRecenzii(String r) {
+		
+		try (Reader reader = new FileReader(r)) {
+			JSONParser parser = new JSONParser();
+			JSONArray jsonArray = (JSONArray) parser.parse(reader);
+			Iterator<JSONObject> it = jsonArray.iterator();
+			while (it.hasNext()) {
+					JSONObject obj = it.next();
+					
+				lista.add(obj);	
 
+			}
+		} catch (IOException ev) {
+			ev.printStackTrace();
+		} catch (ParseException ev) {
+			ev.printStackTrace();
+		}
+		return lista;
+	}
+	public void writeRecenzii(String r) {
+		if(textPanel.getTextArea().getText().equals("")) {
+			textPanel.getErrorLabel().setText("Introdu recenzia");
+			return;
+		}
+		
+		File file = new File(r);
+		
+		String recenzie = textPanel.getTextArea().getText();
+		String numeClient = clientFrame.getNumeClient();
+		
+		JSONParser parser = new JSONParser();
+
+		try (Reader reader = new FileReader(file)) {
+			JSONArray jsonArray = (JSONArray) parser.parse(reader);
+			if(jsonArray.isEmpty()) {
+				
+				JSONObject obj1 = new JSONObject();
+				obj1.put("Nume Client", numeClient);
+				obj1.put("Recenzie", recenzie);
+				
+				list.add(obj1);
+				try (FileWriter fw = new FileWriter(file)) {
+					fw.write(list.toJSONString());
+				} catch (IOException e1) {e1.printStackTrace();}
+				
+				JTextArea textArea = textPanel.getTextArea();
+				textArea.setText("");
+				
+				return;
+			}
+			else {
+				JSONParser parser2 = new JSONParser();
+				try (Reader reader2 = new FileReader(file)) {
+					JSONArray jsonArray2 = (JSONArray) parser.parse(reader2);
+					JSONObject obj1 = new JSONObject();
+					obj1.put("Nume Client", numeClient);
+					obj1.put("Recenzie", recenzie);
+
+					jsonArray2.add(obj1);
+					try (FileWriter fw = new FileWriter(file)) {
+						fw.write(jsonArray2.toJSONString());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					
+					JTextArea textArea = textPanel.getTextArea();
+					textArea.setText("");
+					
+				} catch (IOException e1) {e1.printStackTrace();}
+				  catch (ParseException e1) {e1.printStackTrace();}
+			}
+
+			}catch (IOException e1) {e1.printStackTrace();}
+			 catch (ParseException e1) {e1.printStackTrace();}
+	}
 	
 	public RecenzieFrame() {
 		super("Recenzie");
@@ -85,66 +162,8 @@ public class RecenzieFrame extends JFrame{
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				
+				writeRecenzii("src/main/resources/FisierRecenzii.json");
 				
-				if(textPanel.getTextArea().getText().equals("")) {
-					textPanel.getErrorLabel().setText("Introdu recenzia");
-					return;
-				}
-				
-				File file = new File("src/main/resources/FisierRecenzii.json");
-				
-				String recenzie = textPanel.getTextArea().getText();
-				String numeClient = clientFrame.getNumeClient();
-				
-				JSONParser parser = new JSONParser();
-
-				try (Reader reader = new FileReader(file)) {
-					JSONArray jsonArray = (JSONArray) parser.parse(reader);
-					if(jsonArray.isEmpty()) {
-						
-						JSONObject obj1 = new JSONObject();
-						obj1.put("Nume Client", numeClient);
-						obj1.put("Recenzie", recenzie);
-
-
-						JSONArray list = new JSONArray();
-						list.add(obj1);
-
-
-						try (FileWriter fw = new FileWriter(file)) {
-							fw.write(list.toJSONString());
-						} catch (IOException e1) {e1.printStackTrace();}
-						
-						JTextArea textArea = textPanel.getTextArea();
-						textArea.setText("");
-						
-						return;
-					}
-					else {
-						JSONParser parser2 = new JSONParser();
-						try (Reader reader2 = new FileReader(file)) {
-							JSONArray jsonArray2 = (JSONArray) parser.parse(reader2);
-							JSONObject obj1 = new JSONObject();
-							obj1.put("Nume Client", numeClient);
-							obj1.put("Recenzie", recenzie);
-
-							jsonArray2.add(obj1);
-
-							try (FileWriter fw = new FileWriter(file)) {
-								fw.write(jsonArray2.toJSONString());
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-							
-							JTextArea textArea = textPanel.getTextArea();
-							textArea.setText("");
-							
-						} catch (IOException e1) {e1.printStackTrace();}
-						  catch (ParseException e1) {e1.printStackTrace();}
-					}
-
-					}catch (IOException e1) {e1.printStackTrace();}
-					 catch (ParseException e1) {e1.printStackTrace();}
             }
 			
 		});
@@ -175,7 +194,7 @@ public class RecenzieFrame extends JFrame{
 		this.clientFrame = clientFrame2;
 		clientFrame.setVisible(false);
 	}
-
+	
 
 }
 

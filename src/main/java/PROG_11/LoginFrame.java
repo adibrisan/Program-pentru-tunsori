@@ -27,8 +27,9 @@ import org.json.simple.parser.ParseException;
 public class LoginFrame extends JFrame{
 	private MainFrame mainFrame;
 	private InregistrarePanel inregistrarePanel;
+	private JSONArray list = new JSONArray();
 	
-	  private static String encodePassword(String salt, String password) {
+	  public static String encodePassword(String salt, String password) {
 	        MessageDigest md = getMessageDigest();
 	        md.update(salt.getBytes(StandardCharsets.UTF_8));
 
@@ -39,7 +40,7 @@ public class LoginFrame extends JFrame{
 	                .replace("\"", ""); //to be able to save in JSON format
 	    }
 
-	    private static MessageDigest getMessageDigest() {
+	    public static MessageDigest getMessageDigest() {
 	        MessageDigest md;
 	        try {
 	            md = MessageDigest.getInstance("SHA-512");
@@ -47,6 +48,12 @@ public class LoginFrame extends JFrame{
 	            throw new IllegalStateException("SHA-512 does not exist!");
 	        }
 	        return md;
+	    }
+	    public boolean checkCredentials(String username,String pass,String user,String pas) {
+	    	if(username.equals(user) && MessageDigest.isEqual(pass.getBytes(),encodePassword(user,pas).getBytes())) {
+				return true;
+			}
+	    	else return false;
 	    }
 
 	@SuppressWarnings("unchecked")
@@ -92,8 +99,6 @@ public class LoginFrame extends JFrame{
 		obj6.put("username", "Bianca");
 		obj6.put("password", encodePassword("Bianca","buleu"));
 
-		
-		JSONArray list = new JSONArray();
 		list.add(obj1);
 		list.add(obj2);
 		list.add(obj3);
@@ -124,7 +129,8 @@ public class LoginFrame extends JFrame{
 							String parolaJSON = (String) obj.get("password");
 							String user = inregistrarePanel.getNameField().getText();
 							String parola = inregistrarePanel.getPasswordField().getText();
-							if(userJSON.equals(user) && MessageDigest.isEqual(parolaJSON.getBytes(),encodePassword(user,parola).getBytes())) {
+							if(checkCredentials(userJSON,parolaJSON,user,parola) == true)
+							{
 								ClientFrame client = new ClientFrame();
 								client.setLoginFrameOff(getLoginFrame());
 								client.setClientName(userJSON);
@@ -146,7 +152,7 @@ public class LoginFrame extends JFrame{
 					inregistrarePanel.getErrorLabel().setText("Invalid user...");
 			      }
 				
-			}
+			} 
 			
 		});
 		
@@ -159,5 +165,8 @@ public class LoginFrame extends JFrame{
 	
 	public LoginFrame getLoginFrame(){
 		return this;
+	}
+	public JSONArray getListUser() {
+		return list;
 	}
 }

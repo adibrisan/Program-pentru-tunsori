@@ -11,14 +11,14 @@ import javax.swing.JTextField;
 public class ToolBar2Btn extends JPanel{
 	private JButton goBackBtn;
 	private JButton trimiteBtn;
-	
+	private boolean ok=false;
 	public ToolBar2Btn() {
 		goBackBtn = new JButton("Inapoi");
 		trimiteBtn = new JButton("OK");
 		
 		Color verde = new Color(51,153,0);
 		Color rosu = new Color(207,0,15);
-		
+		ok=true;
 		trimiteBtn.setBackground(verde);
 		trimiteBtn.setForeground(Color.white);
 		goBackBtn.setBackground(rosu);
@@ -37,5 +37,8 @@ public class ToolBar2Btn extends JPanel{
 
 	public JButton getOKBtn() {
 		return trimiteBtn;
+	}
+	public boolean isOK5() {
+		return ok;
 	}
 }

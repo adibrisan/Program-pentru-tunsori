@@ -19,9 +19,9 @@ public class OptiuniFrizerPanel extends JPanel{
 	private JButton programareBtn;
 	private JButton recenziiBtn;
 	private JLabel messageLabel;
-	
+	private boolean ok = false;
 	public OptiuniFrizerPanel() {
-		
+		ok = true;
 		verificaAgendaBtn = new JButton("Verifica Agenda");
 		programareBtn = new JButton("Fa o programare");
 		recenziiBtn = new JButton("Vezi Recenziile");
@@ -101,6 +101,8 @@ public class OptiuniFrizerPanel extends JPanel{
 	public AbstractButton getAgendaBtn() {
 		return verificaAgendaBtn;
 	}
-	
+	public boolean isOK4() {
+		return ok;
+	}
 	
 }

@@ -18,9 +18,9 @@ public class OptiuniClientPanel extends JPanel{
 	private JButton programareBtn;
 	private JButton recenziiBtn;
 	private JLabel messageLabel;
-	
+	private boolean ok=false;
 	public OptiuniClientPanel() {
-		
+		ok=true;
 		verificaOrarulBtn = new JButton("Verifica Agenda");
 		programareBtn = new JButton("Fa o programare");
 		recenziiBtn = new JButton("Scrie o recenzie");
@@ -105,6 +105,10 @@ public class OptiuniClientPanel extends JPanel{
 
 	public JLabel getMessageLabel() {
 		return messageLabel;
+	}
+	
+	public boolean isOK3() {
+		return ok;
 	}
 
 }

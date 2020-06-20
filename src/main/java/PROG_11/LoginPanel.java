@@ -21,10 +21,23 @@ import javax.swing.border.TitledBorder;
 
 public class LoginPanel extends JPanel{
 	private JButton loginBtn;
+	private Image image=null;
+	private boolean ok=false;
+	private boolean ok1=false;
+	public void getImage() {
+	
+		try {
+			image = ImageIO.read(new File("src/main/resources/login.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if(image!=null)
+			ok=true;
+	}
 	
 	public LoginPanel() {
 		Dimension dim = getPreferredSize();
-		
+		ok1=true;
 		dim.width = 250;
 		setPreferredSize(dim);	
 		Color culoareAlba = Color.white;
@@ -36,13 +49,8 @@ public class LoginPanel extends JPanel{
 		
 		loginBtn = new JButton("Login");
 	    loginBtn.setBorder(BorderFactory.createEmptyBorder(10, 21, 10, 21));
+	    getImage();
 	    
-	    Image image = null;
-		try {
-			image = ImageIO.read(new File("src/main/resources/login.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	    JLabel imageLabel = new JLabel();
 	    Image dimg = image.getScaledInstance(120,150,Image.SCALE_SMOOTH);
 	    ImageIcon imageIcon = new ImageIcon(dimg);
@@ -77,5 +85,11 @@ public class LoginPanel extends JPanel{
 	
 	public JButton getLoginButton() {
 		return loginBtn;
+	}
+	public boolean getPhoto() {
+		return ok;
+	}
+	public boolean isOK() {
+		return ok1;
 	}
 }

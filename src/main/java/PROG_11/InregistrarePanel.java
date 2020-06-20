@@ -18,16 +18,16 @@ import javax.swing.border.TitledBorder;
 
 public class InregistrarePanel extends JPanel{
 	private JLabel numeLabel;
-	private JTextField numeField;
+	public JTextField numeField;
 	private JLabel parolaLabel;
-	private JPasswordField parolaField;
-	private JButton loginBtn;
+	public JPasswordField parolaField;
+	public JButton loginBtn;
 	private GridBagConstraints gc;
 	private JLabel errorLabel;
-
+	private boolean ok=false;
 	
 	public InregistrarePanel() {
-		
+		ok=true;
 		Color culoareAlba = Color.white;
 		Font myFont = new Font("Times", Font.PLAIN, 15);
 		
@@ -124,5 +124,8 @@ public class InregistrarePanel extends JPanel{
 
 	public JTextField getNameField() {
 		return numeField;
+	}
+	public boolean isOK2() {
+		return ok;
 	}
 }
